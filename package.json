@@ -16,6 +16,7 @@
     "clean": "rm -rf lib",
     "build": "npm run lint && npm run clean && babel src --out-dir lib",
     "lint": "eslint bin src test",
+    "test:cov": "babel-node ./node_modules/.bin/isparta cover --report lcov _mocha -- --compilers js:babel/register",
     "test": "npm run lint && mocha --compilers js:babel/register"
   },
   "repository": {
@@ -46,6 +47,7 @@
     "dirty-chai": "^1.2.2",
     "eslint": "^1.2.1",
     "eslint-plugin-react": "^3.2.3",
+    "isparta": "^3.0.3",
     "istanbul": "^0.3.18",
     "mocha": "^2.2.5",
     "sinon": "^1.16.1",

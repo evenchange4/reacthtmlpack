@@ -44,3 +44,4 @@ public/assets
 public/index.html
 public/*.gz
 tmp/*
+coverage
