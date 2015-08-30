@@ -16,8 +16,10 @@
     "clean": "rm -rf lib",
     "build": "npm run lint && npm run clean && babel src --out-dir lib",
     "lint": "eslint bin src test",
+    "pretest": "npm run lint",
+    "pretest:cov": "npm run lint",
     "test:cov": "babel-node ./node_modules/.bin/isparta cover --report lcov _mocha -- --compilers js:babel/register",
-    "test": "npm run lint && mocha --compilers js:babel/register"
+    "test": "mocha --compilers js:babel/register"
   },
   "repository": {
     "type": "git",
