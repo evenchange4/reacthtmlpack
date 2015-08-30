@@ -1,5 +1,5 @@
 import {default as React} from "react";
 
-import {default as RootEntry} from "./RootEntry";
+import {default as ReactRoot} from "./ReactRoot";
 
-React.render(<RootEntry />, document.getElementById("react-container"));
+React.render(<ReactRoot />, document.getElementById("react-container"));
