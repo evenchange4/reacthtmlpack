@@ -1,3 +1,13 @@
+<a name"0.2.1"></a>
+### 0.2.1 (2015-08-30)
+
+
+#### Bug Fixes
+
+* **.travis.yml:** coverage location ([a8e39e74](https://github.com/tomchentw/reacthtmlpack/commit/a8e39e74))
+* **package.json:** include bin/ in files ([780c1949](https://github.com/tomchentw/reacthtmlpack/commit/780c1949))
+
+
 <a name"0.2.0"></a>
 ## 0.2.0 (2015-08-26)
 
