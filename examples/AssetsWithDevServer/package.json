@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "example of showing simple script entry point with extracted css files using reacthtmlpack",
   "scripts": {
-    "clean": "rimraf ../../public/index.html ../../public/assets",
+    "clean": "rimraf ../../public/index.html ../../public/assets ../../public/tmp",
     "prebuild": "npm run clean",
     "build": "NODE_ENV=production reacthtmlpack buildToDir ../../public ./views/*.html.js",
     "predev": "npm run clean",
