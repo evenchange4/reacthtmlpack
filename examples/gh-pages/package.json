@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "example of showing 1. script entry point 2. extracted scss files and 3. server rendering using reacthtmlpack",
   "scripts": {
-    "clean": "rm -rf ../../public/index.html ../../public/assets ../../tmp",
+    "clean": "rimraf ../../public/index.html ../../public/assets ../../public/tmp",
     "prebuild": "npm run clean",
     "build": "NODE_ENV=production reacthtmlpack buildToDir ../../public ./views/*.html.js",
     "predev": "npm run clean",
@@ -21,6 +21,7 @@
     "null-loader": "^0.1.1",
     "raw-loader": "^0.5.1",
     "react-hot-loader": "^1.2.9",
+    "rimraf": "^2.4.3",
     "sass-loader": "^2.0.1",
     "style-loader": "^0.12.3"
   },

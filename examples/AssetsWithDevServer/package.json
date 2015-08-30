@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "description": "example of showing simple script entry point with extracted css files using reacthtmlpack",
   "scripts": {
-    "clean": "rm -rf ../../public/index.html ../../public/assets ../../tmp",
-    "build": "npm run clean && NODE_ENV=production reacthtmlpack buildToDir ../../public ./scripts/*.html.js",
-    "dev": "npm run clean && NODE_ENV=development reacthtmlpack buildToDir ../../public ./scripts/*.html.js",
-    "start": "npm run clean && NODE_ENV=development reacthtmlpack devServer ./AssetsWithDevServer.webpackConfig.js ../../public ./scripts/*.html.js"
+    "clean": "rimraf ../../public/index.html ../../public/assets",
+    "prebuild": "npm run clean",
+    "build": "NODE_ENV=production reacthtmlpack buildToDir ../../public ./views/*.html.js",
+    "predev": "npm run clean",
+    "dev": "NODE_ENV=development reacthtmlpack buildToDir ../../public ./views/*.html.js",
+    "prestart": "npm run clean",
+    "start": "NODE_ENV=development reacthtmlpack devServer ./AssetsWithDevServer.webpackConfig.js ../../public ./views/*.html.js"
   },
   "devDependencies": {
     "babel-core": "^5.8.22",
@@ -15,6 +18,7 @@
     "css-loader": "^0.16.0",
     "extract-text-webpack-plugin": "^0.8.2",
     "react-hot-loader": "^1.2.9",
+    "rimraf": "^2.4.3",
     "style-loader": "^0.12.3"
   },
   "dependencies": {

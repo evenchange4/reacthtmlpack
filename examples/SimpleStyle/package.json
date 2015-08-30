@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "example of showing simple script entry point with direct link to css entry point using reacthtmlpack",
   "scripts": {
-    "clean": "rm -rf ../../public/index.html ../../public/assets ../../tmp",
-    "watch": "npm run clean && NODE_ENV=development reacthtmlpack watchAndBuildToDir ../../public ./scripts/*.html.js",
-    "dev": "npm run clean && NODE_ENV=development reacthtmlpack buildToDir ../../public ./scripts/*.html.js"
+    "clean": "rimraf ../../public/index.html ../../public/assets ../../tmp",
+    "prewatch": "npm run clean",
+    "watch": "NODE_ENV=development reacthtmlpack watchAndBuildToDir ../../public ./views/*.html.js",
+    "predev": "npm run clean",
+    "dev": "NODE_ENV=development reacthtmlpack buildToDir ../../public ./views/*.html.js"
   },
   "devDependencies": {
     "babel-core": "^5.8.22",
@@ -14,6 +16,7 @@
     "css-loader": "^0.16.0",
     "extract-text-webpack-plugin": "^0.8.2",
     "normalize.css": "^3.0.3",
+    "rimraf": "^2.4.3",
     "style-loader": "^0.12.3"
   },
   "dependencies": {
