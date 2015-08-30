@@ -26,7 +26,7 @@ export default (
 
 ### 2 - Put <WebpackScriptEntry> Component(s) in the Template
 
-Inside the `<body>` of [`index.html.js`](https://github.com/tomchentw/reacthtmlpack/blob/master/examples/SimpleScript/scripts/index.html.js), add `<WebpackScriptEntry>`.
+Inside the `<body>` of [`index.html.js`](https://github.com/tomchentw/reacthtmlpack/blob/master/examples/SimpleScript/views/index.html.js), add `<WebpackScriptEntry>`.
 
 ```js
     // omitted ...
@@ -48,7 +48,7 @@ The **key** part of [`entry` object property in the webpack config file](http://
 
 #### `(string/array<string>) chunkFilepath`
 
-The **value** part of [`entry` object property in the webpack config file](http://webpack.github.io/docs/configuration.html#entry).
+The **value** part of [`entry` object property in the webpack config file](http://webpack.github.io/docs/configuration.html#entry). The paths here is relative to the [webpack context](http://webpack.github.io/docs/configuration.html#context).
 
 #### `(string) configFilepath`
 
@@ -94,5 +94,5 @@ module.exports = {
 ```sh
 cd examples/SimpleScript
 npm install
-npm run dev # reacthtmlpack buildToDir ../../public ./scripts/*.html.js
+npm run dev # reacthtmlpack buildToDir ../../public ./views/*.html.js
 ```
