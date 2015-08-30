@@ -5,9 +5,10 @@
   "description": "Using HTML templates as entry points for webpack",
   "main": "lib/index.js",
   "bin": {
-    "reacthtmlpack": "./bin/index.js"
+    "reacthtmlpack": "bin/index.js"
   },
   "files": [
+    "bin/",
     "lib/",
     "src/",
     "CHANGELOG.md"
