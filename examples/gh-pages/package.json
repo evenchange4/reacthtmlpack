@@ -4,9 +4,12 @@
   "description": "example of showing 1. script entry point 2. extracted scss files and 3. server rendering using reacthtmlpack",
   "scripts": {
     "clean": "rm -rf ../../public/index.html ../../public/assets ../../tmp",
-    "build": "npm run clean && NODE_ENV=production reacthtmlpack buildToDir ../../public ./scripts/*.html.js",
-    "dev": "npm run clean && NODE_ENV=development reacthtmlpack buildToDir ../../public ./scripts/*.html.js",
-    "start": "npm run clean && NODE_ENV=development reacthtmlpack devServer ./Client.webpackConfig.js ../../public ./scripts/*.html.js"
+    "prebuild": "npm run clean",
+    "build": "NODE_ENV=production reacthtmlpack buildToDir ../../public ./scripts/*.html.js",
+    "predev": "npm run clean",
+    "dev": "NODE_ENV=development reacthtmlpack buildToDir ../../public ./scripts/*.html.js",
+    "prestart": "npm run clean",
+    "start": "NODE_ENV=development reacthtmlpack devServer ./Client.webpackConfig.js ../../public ./scripts/*.html.js"
   },
   "devDependencies": {
     "babel-core": "^5.8.22",
