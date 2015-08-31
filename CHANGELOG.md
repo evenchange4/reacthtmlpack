@@ -1,3 +1,12 @@
+<a name"0.2.3"></a>
+### 0.2.3 (2015-08-31)
+
+
+#### Features
+
+* **core:** change from Error to warning ([70203b09](https://github.com/tomchentw/reacthtmlpack/commit/70203b09))
+
+
 <a name"0.2.2"></a>
 ### 0.2.2 (2015-08-31)
 
