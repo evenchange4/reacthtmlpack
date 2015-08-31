@@ -1,3 +1,12 @@
+<a name"0.2.2"></a>
+### 0.2.2 (2015-08-31)
+
+
+#### Features
+
+* **core:** support reacthtmlpackExtraEntry in your webpackConfig ([c434aebe](https://github.com/tomchentw/reacthtmlpack/commit/c434aebe), closes [#2](https://github.com/tomchentw/reacthtmlpack/issues/2))
+
+
 <a name"0.2.1"></a>
 ### 0.2.1 (2015-08-30)
 
