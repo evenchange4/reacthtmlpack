@@ -110,7 +110,16 @@ export function webpackConfig$ToWebpackCompiler$ (webpackConfig$) {
       // In devServer command, you have to keep all output.path the same.
       const theyDontHaveTheSameOutputPath = webpackConfig.some(it => it.output.path !== outputPath);
       if (theyDontHaveTheSameOutputPath) {
-        throw new Error("Make all your output.path the same in all of your webpack.config.js");
+        const message = `Some of your output.path is different than others in 
+all of your webpack config files. This may cause unexpected behaviour when 
+using them with webpack-dev-server. The base path serving your assets may 
+change according to these commits:
+0. https://github.com/webpack/webpack-dev-server/blob/f6b3bcb4a349540176bacc86df0df8e4109d0e3f/lib/Server.js#L53
+1. https://github.com/webpack/webpack-dev-middleware/blob/42e5778f44939cd45fedd36d7b201b3eeb357630/middleware.js#L140
+2. https://github.com/webpack/webpack/blob/8ff6cb5fedfc487665bb5dd8ecedf5d4ea306b51/lib/MultiCompiler.js#L51-L63
+request goes from webpack-dev-server (0.) > webpack-dev-middleware (1.) > webpack/MultiCompiler (2.)`
+
+        console.warn(message);
       }
     })
     // The webpackCompiler should be an instance of MultiCompiler
