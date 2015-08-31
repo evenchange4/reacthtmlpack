@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "example of showing simple script entry point with direct link to css entry point using reacthtmlpack",
   "scripts": {
-    "clean": "rimraf ../../public/index.html ../../public/assets ../../public/tmp",
+    "clean": "rimraf ../../public/index.html ../../public/assets",
     "prewatch": "npm run clean",
     "watch": "NODE_ENV=development reacthtmlpack watchAndBuildToDir ../../public ./views/*.html.js",
     "predev": "npm run clean",

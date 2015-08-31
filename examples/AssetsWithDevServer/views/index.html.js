@@ -12,7 +12,7 @@ export default (
     <head>
       <title>React Google Maps | tomchentw</title>
       <WebpackStyleEntry
-        chunkName="assets/client"
+        chunkName="client"
         chunkFilepath="./scripts/client.js"
         configFilepath="../AssetsWithDevServer.webpackConfig.js"
       />
@@ -21,7 +21,7 @@ export default (
     <body>
       <div id="react-container" />
       <WebpackScriptEntry
-        chunkName="assets/client"
+        chunkName="client"
         chunkFilepath="./scripts/client.js"
         configFilepath="../AssetsWithDevServer.webpackConfig.js"
       />

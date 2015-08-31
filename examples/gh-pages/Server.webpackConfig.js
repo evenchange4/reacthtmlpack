@@ -28,7 +28,7 @@ var externals = [
 module.exports = {
   context: __dirname,
   output: {
-    path: Path.resolve(__dirname, "../../public"),
+    path: Path.resolve(__dirname, "../../public/assets"),
     filename: "[name].js",
     libraryTarget: "commonjs2",
   },
