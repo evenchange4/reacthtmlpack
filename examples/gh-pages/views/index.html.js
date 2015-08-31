@@ -12,6 +12,7 @@ export default (
   <html>
     <head>
       <title>React Google Maps | tomchentw</title>
+      <link href="favicon.ico" rel="shortcut icon" />
       <WebpackStyleEntry
         chunkName="client"
         chunkFilepath="./scripts/client.js"

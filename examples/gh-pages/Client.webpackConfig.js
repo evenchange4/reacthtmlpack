@@ -28,14 +28,14 @@ module.exports = {
   devServer: {
     port: 8080,
     host: "localhost",
-    contentBase: Path.resolve(__dirname, "../../public"),
-    publicPath: "/assets/",
+    contentBase: Path.resolve(__dirname, "../../public"), // Anything inside this will be served as static content (favicon?)
+    publicPath: "/assets/", // For every request comes in, the path should match after `/assets/#{ pathOfTheFile }`
     hot: true,
   },
   context: __dirname,
   output: {
-    path: Path.resolve(__dirname, "../../public/assets"),
-    publicPath: "assets/",
+    path: Path.resolve(__dirname, "../../public/assets"), // Actual pathOfTheFile will lies in
+    publicPath: "assets/", // From the view of the website, the generated stuff are put in the `assets/` path
     filename: FILENAME_FORMAT,
   },
   module: {
