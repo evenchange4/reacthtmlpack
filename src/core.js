@@ -257,12 +257,17 @@ export function groupedObsToWebpackConfig (groupedObservable) {
   return groupedObservable.reduce(toEntryReducer, {entry: {}, chunkList: []})
     .first()
     .map(function ({entry, chunkList}) {
+      const webpackConfig = require(webpackConfigFilepath);
+
       return {
         webpackConfigFilepath,
         chunkList,
         webpackConfig: {
-          ...require(webpackConfigFilepath),
-          entry,
+          ...webpackConfig,
+          entry: {
+            ...webpackConfig.reacthtmlpackExtraEntry,
+            ...entry,
+          },
         },
       };
     });
