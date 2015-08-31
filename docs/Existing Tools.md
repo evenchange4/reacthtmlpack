@@ -50,7 +50,7 @@ The front-end toolchain is quickly evolving. Doing **Server Bundling** could hel
 There're some pitfalls that needs your attention:
 
 * You have to include `target: "node"` in your `server-bundling.webpackConfig.js`: http://git.io/vG8W8
-* You have to include `libraryTarget: "commonjs2"` to export your Component for node.js: http://git.io/vG8WB
+* You have to include `libraryTarget: "commonjs2"` to export your Component for node.js: http://git.io/vG81d
 * You should treat `dependencies` as `external` resources to prevent duplication and unexpected behaviour: http://git.io/vG8WR
 
 And that's it. After these you should have no problem using **Server Bundling**!
