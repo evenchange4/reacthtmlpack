@@ -30,7 +30,6 @@ module.exports = {
   output: {
     path: Path.resolve(__dirname, "../../public"),
     filename: "[name].js",
-    library: true,
     libraryTarget: "commonjs2",
   },
   target: "node",
