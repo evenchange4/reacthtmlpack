@@ -27,14 +27,14 @@ npm install reacthtmlpack --save
 
 ### Slightly Long Version
 
-When I tried to develop a static hosted website (e.g. gh-pages) using React and webpack, I found it annoying that webpack doesn't support `index.html` as entry point natively. People feel the same way, too. They've developed [many tools] out there to approach the problem. However, all of them has certain pitfalls that doesn't match my needs:
+When I tried to develop a static hosted website (e.g. gh-pages) using React and webpack, I found it annoying that webpack doesn't support `index.html` as entry point natively. People feel the same way, too. They've developed [many tools](https://github.com/tomchentw/reacthtmlpack/blob/master/docs/Existing%20Tools.md) out there to approach the problem. However, all of them has certain pitfalls that doesn't match my needs:
 
 * **extracted css from js**: common pattern for React application
 * **cache busting**: generating hashed url to the compiled assets by webpack
 * **server rendering**: rendering React component statically as part of html template
 * **server bundling**: generating assets using `target: "node"` that will be used in server rendering
 
-<!-- TBC: explain why these are important -->
+*Read more about [server bundling](https://github.com/tomchentw/reacthtmlpack/blob/master/docs/Existing%20Tools.md#server-bundling)*
 
 
 ## Who Should Use This?
