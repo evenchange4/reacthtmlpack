@@ -41,6 +41,7 @@ export default {
   context: __dirname,
   output: {
     path: resolvePath(__dirname, "../../public/assets"), // Actual pathOfTheFile will lies in
+    pathinfo: "production" !== process.env.NODE_ENV,
     publicPath: "assets/", // From the view of the website, the generated stuff are put in the `assets/` path
     filename: FILENAME_FORMAT,
   },

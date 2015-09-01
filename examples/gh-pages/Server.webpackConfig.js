@@ -24,7 +24,7 @@ const externals = [
 ].reduce((acc, dependencies) => {
   return acc.concat(
     Object.keys(dependencies)
-      .map(key => new RegExp(`^${ key }(/\\S+)?$`)
+      .map(key => new RegExp(`^${ key }(\S+)?\$`))
   );
 }, []);
 
@@ -32,6 +32,7 @@ export default {
   context: __dirname,
   output: {
     path: resolvePath(__dirname, "../../public/assets"),
+    pathinfo: "production" !== process.env.NODE_ENV,
     filename: "[name].js",
     libraryTarget: "commonjs2",
   },
