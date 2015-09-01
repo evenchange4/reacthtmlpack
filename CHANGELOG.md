@@ -1,3 +1,12 @@
+<a name"0.3.0"></a>
+## 0.3.0 (2015-09-01)
+
+
+#### Features
+
+* **core:** compile webpackConfig using babel ([1a1865f4](https://github.com/tomchentw/reacthtmlpack/commit/1a1865f4), closes [#6](https://github.com/tomchentw/reacthtmlpack/issues/6))
+
+
 <a name"0.2.3"></a>
 ### 0.2.3 (2015-08-31)
 
