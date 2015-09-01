@@ -1,3 +1,12 @@
+<a name"0.3.1"></a>
+### 0.3.1 (2015-09-01)
+
+
+#### Features
+
+* **WebpackNullEntry:** add null entry for parse cloud code? ([6a950235](https://github.com/tomchentw/reacthtmlpack/commit/6a950235))
+
+
 <a name"0.3.0"></a>
 ## 0.3.0 (2015-09-01)
 
