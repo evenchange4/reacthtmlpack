@@ -265,20 +265,24 @@ export function groupedObsToWebpackConfig (groupedObservable) {
 
   return groupedObservable.reduce(toEntryReducer, {entry: {}, chunkList: []})
     .first()
-    .map(function ({entry, chunkList}) {
-      const webpackConfig = require(webpackConfigFilepath);
+    .selectMany(function ({entry, chunkList}) {
+      return transformFile(webpackConfigFilepath)
+        .map(({code}) => {
+          const WebpackConfigModule = evaluateAsES2015Module(code, webpackConfigFilepath);
+          const webpackConfig = WebpackConfigModule.default;
 
-      return {
-        webpackConfigFilepath,
-        chunkList,
-        webpackConfig: {
-          ...webpackConfig,
-          entry: {
-            ...webpackConfig.reacthtmlpackExtraEntry,
-            ...entry,
-          },
-        },
-      };
+          return {
+            webpackConfigFilepath,
+            chunkList,
+            webpackConfig: {
+              ...webpackConfig,
+              entry: {
+                ...webpackConfig.reacthtmlpackExtraEntry,
+                ...entry,
+              },
+            },
+          }
+        });
     });
 }
 

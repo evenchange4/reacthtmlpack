@@ -17,6 +17,7 @@
     "clean": "rimraf lib",
     "prebuild": "npm run lint && npm run clean",
     "build": "babel src --out-dir lib",
+    "build:watch": "npm run build -- --watch",
     "lint": "eslint bin src test",
     "pretest": "npm run lint",
     "pretest:cov": "npm run lint",
