@@ -1,12 +1,18 @@
-"use strict";
+import {
+  resolve as resolvePath,
+} from "path";
 
-var Path = require("path");
-var webpack = require("webpack");
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+import {
+  default as webpack,
+} from "webpack";
 
-var JSX_LOADER_LIST;
-var FILENAME_FORMAT;
-var PRODUCTION_PLUGINS;
+import {
+  default as ExtractTextPlugin,
+} from "extract-text-webpack-plugin";
+
+let JSX_LOADER_LIST;
+let FILENAME_FORMAT;
+let PRODUCTION_PLUGINS;
 
 if ("production" === process.env.NODE_ENV) {
   JSX_LOADER_LIST = ["babel"];
@@ -24,17 +30,17 @@ if ("production" === process.env.NODE_ENV) {
   PRODUCTION_PLUGINS = [];
 }
 
-module.exports = {
+export default {
   devServer: {
     port: 8080,
     host: "localhost",
-    contentBase: Path.resolve(__dirname, "../../public"), // Anything inside this will be served as static content (favicon?)
+    contentBase: resolvePath(__dirname, "../../public"), // Anything inside this will be served as static content (favicon?)
     publicPath: "/assets/", // For every request comes in, the path should match after `/assets/#{ pathOfTheFile }`
     hot: true,
   },
   context: __dirname,
   output: {
-    path: Path.resolve(__dirname, "../../public/assets"), // Actual pathOfTheFile will lies in
+    path: resolvePath(__dirname, "../../public/assets"), // Actual pathOfTheFile will lies in
     publicPath: "assets/", // From the view of the website, the generated stuff are put in the `assets/` path
     filename: FILENAME_FORMAT,
   },
@@ -58,5 +64,6 @@ module.exports = {
     new ExtractTextPlugin("[name]-[chunkhash].css", {
       disable: "production" !== process.env.NODE_ENV
     }),
-  ].concat(PRODUCTION_PLUGINS),
+    ...PRODUCTION_PLUGINS,
+  ],
 };

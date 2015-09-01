@@ -1,9 +1,12 @@
-"use strict";
+import {
+  resolve as resolvePath,
+} from "path";
 
-var Path = require("path");
-var webpack = require("webpack");
+import {
+  default as webpack,
+} from "webpack";
 
-var PRODUCTION_PLUGINS;
+let PRODUCTION_PLUGINS;
 
 if ("production" === process.env.NODE_ENV) {
   PRODUCTION_PLUGINS = [
@@ -15,20 +18,20 @@ if ("production" === process.env.NODE_ENV) {
   PRODUCTION_PLUGINS = [];
 }
 
-var externals = [
+const externals = [
   require("./package.json").dependencies,
   require("../../package.json").dependencies,
-].reduce(function (acc, dependencies) {
+].reduce((acc, dependencies) => {
   return acc.concat(
     Object.keys(dependencies)
-      .map(function (key) { return new RegExp("^" + key); })
+      .map(key => new RegExp(`^${ key }`))
   );
 }, []);
 
-module.exports = {
+export default {
   context: __dirname,
   output: {
-    path: Path.resolve(__dirname, "../../public/assets"),
+    path: resolvePath(__dirname, "../../public/assets"),
     filename: "[name].js",
     libraryTarget: "commonjs2",
   },
@@ -49,5 +52,6 @@ module.exports = {
   },
   plugins: [
     new webpack.EnvironmentPlugin("NODE_ENV"),
-  ].concat(PRODUCTION_PLUGINS),
+    ...PRODUCTION_PLUGINS,
+  ],
 };
