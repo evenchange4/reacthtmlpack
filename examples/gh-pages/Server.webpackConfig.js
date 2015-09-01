@@ -24,7 +24,7 @@ const externals = [
 ].reduce((acc, dependencies) => {
   return acc.concat(
     Object.keys(dependencies)
-      .map(key => new RegExp(`^${ key }`))
+      .map(key => new RegExp(`^${ key }(/\\S+)?$`)
   );
 }, []);
 
