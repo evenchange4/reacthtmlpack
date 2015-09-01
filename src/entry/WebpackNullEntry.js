@@ -19,6 +19,8 @@ export default class WebpackNullEntry extends Component {
   }
 
   render () {
-    return null;
+    return (
+      <noscript />
+    );
   }
 }
