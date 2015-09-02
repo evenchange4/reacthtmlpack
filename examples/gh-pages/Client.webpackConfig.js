@@ -37,6 +37,7 @@ export default {
     contentBase: resolvePath(__dirname, "../../public"), // Anything inside this will be served as static content (favicon?)
     publicPath: "/assets/", // For every request comes in, the path should match after `/assets/#{ pathOfTheFile }`
     hot: true,
+    stats: { colors: true },
   },
   context: __dirname,
   output: {

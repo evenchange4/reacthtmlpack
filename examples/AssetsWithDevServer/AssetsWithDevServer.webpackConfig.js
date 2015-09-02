@@ -31,6 +31,7 @@ module.exports = {
     contentBase: Path.resolve(__dirname, "../../public"),
     publicPath: "/assets/",
     hot: true,
+    stats: { colors: true },
   },
   context: __dirname,
   output: {
