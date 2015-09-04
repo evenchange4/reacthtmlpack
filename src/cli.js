@@ -43,6 +43,10 @@ import {
 } from "lodash";
 
 import {
+  default as nodeMkdirp,
+} from "mkdirp";
+
+import {
   xfFilepath$ToWebpackConfig$,
 
   filepath$ToBabelResult$,
@@ -56,6 +60,7 @@ import {
   mergeWebpackStats$ToChunkList$WithWebpackConfig$,
 } from "./core";
 
+const mkdirp = Observable.fromNodeCallback(nodeMkdirp);
 const writeFile = Observable.fromNodeCallback(nodeWriteFile);
 
 /**
@@ -261,7 +266,10 @@ export function createWriteStaticMarkup$ToDestDir (relativePathByMatch$, destDir
         }
       )
       .selectMany(({filepath, markup}) => {
-        return writeFile(filepath, markup);
+        return mkdirp(extractDirname(filepath))
+          .selectMany(() => {
+            return writeFile(filepath, markup);
+          });
       });
   };
 }
