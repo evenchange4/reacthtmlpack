@@ -124,3 +124,101 @@ Look at the [public](https://github.com/tomchentw/reacthtmlpack/tree/master/publ
 1 directory, 3 files
 ```
 
+
+### Full View of Input
+
+*index.html.js*
+
+```js
+import {
+  default as React,
+} from "react";
+
+import {
+  WebpackScriptEntry
+} from "../../../lib/entry";
+
+export default (
+  <html>
+    <head>
+      <title>React Google Maps | tomchentw</title>
+      <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing" />
+    </head>
+    <body>
+      <div id="react-container" />
+      <WebpackScriptEntry
+        chunkName="assets/client"
+        chunkFilepath="./scripts/client.js"
+        configFilepath="../SimpleScript.webpackConfig.js"
+      />
+    </body>
+  </html>
+);
+```
+
+*SimpleScript.webpackConfig.js*
+
+```js
+"use strict";
+
+var Path = require("path");
+var webpack = require("webpack");
+
+module.exports = {
+  context: __dirname,
+  output: {
+    path: Path.resolve(__dirname, "../../public"),
+    filename: "[name].js",
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.js(x?)$/,
+        exclude: /node_modules/,
+        loaders: ["babel"],
+      },
+    ],
+  },
+  plugins: [
+    new webpack.EnvironmentPlugin("NODE_ENV"),
+  ],
+};
+```
+
+P.S. You can write [babel](https://babeljs.io/) supported [webpack](https://webpack.github.io/) config since [0.3.0](https://github.com/tomchentw/reacthtmlpack/blob/master/CHANGELOG.md#030-2015-09-01).
+
+
+### Full View of Output
+
+*public/index.html*
+
+```html
+<!DOCTYPE html><html><head><title>React Google Maps | tomchentw</title><script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;libraries=geometry,drawing"></script></head><body><div id="react-container"></div><script src="assets/client.js"></script></body></html>
+```
+
+*public/assets/client.js*
+
+```js
+/******/ (function(modules) { // webpackBootstrap
+/******/  // The module cache
+/******/  var installedModules = {};
+
+/******/  // The require function
+/******/  function __webpack_require__(moduleId) {
+
+// Omitted ...
+
+/******/  // Load entry module and return exports
+/******/  return __webpack_require__(0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ function(module, exports, __webpack_require__) {
+
+// Omitted ...
+
+  _react2["default"].render(_react2["default"].createElement(_SimpleMap2["default"], null), document.getElementById("react-container"));
+
+// Omitted ...
+```
