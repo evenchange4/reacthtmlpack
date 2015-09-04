@@ -10,6 +10,20 @@ import {
 } from "rx";
 
 import {
+  default as R,
+} from "ramda";
+
+// http://ramdajs.com/docs/#map
+const RxSelectMany = R.curry((f, obs) =>
+  obs.selectMany(f)
+);
+
+const RxGroupBy = R.curry((g, obs) =>
+  obs.groupBy(g)
+);
+
+
+import {
   comp,
   map,
   filter,
@@ -51,33 +65,33 @@ export const xfFilepath$ToWebpackConfig$ = comp(...[
  * @public
  */
 export function filepath$ToBabelResult$ (filepath$) {
-  return filepath$
-    .selectMany(filepath => {
-      return transformFile(filepath)
-        .map(({code}) => ({filepath, code}));
-    });
+  return RxSelectMany(filepath => {
+    return R.map(({code}) => ({filepath, code}), transformFile(filepath));
+  }, filepath$);
 }
 
 /**
  * @public
  */
 export function babelResult$ToReactElement$ (babelResult$) {
-  return babelResult$
-    .map(fromBabelCodeToReactElement);
+  return R.map(fromBabelCodeToReactElement, babelResult$);
 }
 
 /**
  * @public
  */
 export function reactElement$ToChunkList$ (reactElement$) {
-  return reactElement$
-    .selectMany(extractWebpackConfigFilepathList);
+  return RxSelectMany(extractWebpackConfigFilepathList, reactElement$);
 }
 
 /**
  * @public
  */
 export function chunkList$ToWebpackConfig$ (chunkList$) {
+  // return R.pipe(...[
+  //   RxGroupBy(it => it.webpackConfigFilepath),
+  //   RxSelectMany(groupedObsToWebpackConfig),
+  // ], chunkList$);
   return chunkList$
     .groupBy(it => it.webpackConfigFilepath)
     .selectMany(groupedObsToWebpackConfig);

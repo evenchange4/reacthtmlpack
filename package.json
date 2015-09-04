@@ -22,6 +22,7 @@
     "pretest": "npm run lint",
     "pretest:cov": "npm run lint",
     "test:cov": "babel-node ./node_modules/.bin/isparta cover --report lcov _mocha -- $npm_package_config_mocha",
+    "test:watch": "npm test -- --watch",
     "test": "mocha $npm_package_config_mocha"
   },
   "config": {
@@ -69,6 +70,7 @@
     "glob2base": "0.0.12",
     "lodash": "^3.10.1",
     "mkdirp": "^0.5.1",
+    "ramda": "^0.17.1",
     "react": "^0.13.3",
     "rx": "^3.1.1",
     "transducers-js": "^0.4.174",
