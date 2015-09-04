@@ -47,11 +47,13 @@ You have
 
 ## The Solution
 
-* Use Babel, React, Webpack and Webpack-Dev-Server internally
-* Write the `html` template using React with Babel support
-* Declare `<script>` or `<link>` dependencies of your template using React Components
-* Create simple and explicit Command Line Interface
-* HMR, react-hot-loader natively supported
+> Create a CLI `reacthtmkpack` that compiles html files into assets
+
+* Use Babel, React, Webpack and Webpack-Dev-Server. All your favorite ones
+* Write the `html` template using React (with Babel support). No other template library
+* Declare `<script>` or `<link>` dependencies of your template using **React Components**
+* **Simple and Explicit** Command Line Interface
+* HMR, react-hot-loader supported without hassle
 
 
 ## Contributing
