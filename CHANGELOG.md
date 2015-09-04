@@ -1,3 +1,12 @@
+<a name"0.3.3"></a>
+### 0.3.3 (2015-09-04)
+
+
+#### Features
+
+* **cli:** add mkdirp before writing files ([3d11faca](https://github.com/tomchentw/reacthtmlpack/commit/3d11faca), closes [#9](https://github.com/tomchentw/reacthtmlpack/issues/9))
+
+
 <a name"0.3.2"></a>
 ### 0.3.2 (2015-09-04)
 
