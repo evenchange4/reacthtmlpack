@@ -49,10 +49,6 @@ import {
 import {
   xfFilepath$ToWebpackConfig$,
 
-  filepath$ToBabelResult$,
-  babelResult$ToReactElement$,
-  reactElement$ToChunkList$,
-  chunkList$ToWebpackConfig$,
   webpackConfig$ToWebpackCompiler$,
   webpackConfig$ToChunkList$,
   chunkList$ToStaticMarkup$,

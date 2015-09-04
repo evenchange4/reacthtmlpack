@@ -54,35 +54,22 @@ import {
 
 const transformFile = Observable.fromNodeCallback(babel.transformFile);
 
-export const xfFilepath$ToWebpackConfig$ = comp(...[
-  map(filepath$ToBabelResult$),
-  map(babelResult$ToReactElement$),
-  map(reactElement$ToChunkList$),
-  map(chunkList$ToWebpackConfig$),
-]);
+/**
+ * @public
+ */
+export const filepath$ToBabelResult$ = RxSelectMany(filepath => {
+  return R.map(({code}) => ({filepath, code}), transformFile(filepath));
+});
 
 /**
  * @public
  */
-export function filepath$ToBabelResult$ (filepath$) {
-  return RxSelectMany(filepath => {
-    return R.map(({code}) => ({filepath, code}), transformFile(filepath));
-  }, filepath$);
-}
+export const babelResult$ToReactElement$ = R.map(fromBabelCodeToReactElement);
 
 /**
  * @public
  */
-export function babelResult$ToReactElement$ (babelResult$) {
-  return R.map(fromBabelCodeToReactElement, babelResult$);
-}
-
-/**
- * @public
- */
-export function reactElement$ToChunkList$ (reactElement$) {
-  return RxSelectMany(extractWebpackConfigFilepathList, reactElement$);
-}
+export const reactElement$ToChunkList$ = RxSelectMany(extractWebpackConfigFilepathList);
 
 /**
  * @public
@@ -96,6 +83,16 @@ export function chunkList$ToWebpackConfig$ (chunkList$) {
     .groupBy(it => it.webpackConfigFilepath)
     .selectMany(groupedObsToWebpackConfig);
 }
+
+/**
+ * @package
+ */
+export const xfFilepath$ToWebpackConfig$ = comp(...[
+  map(filepath$ToBabelResult$),
+  map(babelResult$ToReactElement$),
+  map(reactElement$ToChunkList$),
+  map(chunkList$ToWebpackConfig$),
+]);
 
 /**
  * @package
