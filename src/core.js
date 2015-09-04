@@ -22,14 +22,6 @@ const RxGroupBy = R.curry((g, obs) =>
   obs.groupBy(g)
 );
 
-
-import {
-  comp,
-  map,
-  filter,
-  identity,
-} from "transducers-js";
-
 Rx.config.longStackSupport = true;
 
 // Note babel-core/index.js is NOT a ES6 module
