@@ -21,13 +21,9 @@ import {
 
 import {
   filepathToBabelResult$,
-  babelResult$ToReactElement$,
+  fromBabelCodeToReactElement,
   reactElement$ToChunkList$,
 } from "../src/core";
-
-import {
-  babelResult$Fixture,
-} from "./fixture/observable";
 
 import {
   default as reactElement$Fixture,
@@ -73,30 +69,21 @@ describe("core", () => {
 
   });
 
-  describe("babelResult$ToReactElement$", () => {
+  describe("fromBabelCodeToReactElement", () => {
 
     it("should be exported", () => {
-      babelResult$ToReactElement$.should.exist();
+      fromBabelCodeToReactElement.should.exist();
     });
 
-    it("should transform a babel-result stream into a ReactElement stream", (done) => {
-      const callback = sinon.spy();
-      
-      babelResult$ToReactElement$(babelResult$Fixture)
-        .tapOnNext(callback)
-        .subscribe(({filepath, element}) => {
+    it("should transform a babel-result object into a ReactElement object", () => {
+      const {filepath, element} = fromBabelCodeToReactElement({
+        filepath: resolvePath(__dirname, "./fixture/file/es6-fixture.js"),
+        code: readFileAsContent(resolvePath(__dirname, "./fixture/file/es5-fixture.js")),
+      });
 
-          const es6Filepath = resolvePath(__dirname, "./fixture/file/es6-fixture.js");
-
-          filepath.should.equal(es6Filepath);
-          element.abc.should.be.a("function");
-          element.resolvePath.should.equal(resolvePath);
-
-        }, done, () => {
-          callback.calledOnce.should.be.true();
-
-          done();
-        });
+      filepath.should.equal(resolvePath(__dirname, "./fixture/file/es6-fixture.js"));
+      element.abc.should.be.a("function");
+      element.resolvePath.should.equal(resolvePath);
     });
 
   });
