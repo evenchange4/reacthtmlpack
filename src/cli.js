@@ -47,8 +47,7 @@ import {
 } from "mkdirp";
 
 import {
-  xfFilepath$ToWebpackConfig$,
-
+  filepath$ToWebpackConfig$,
   webpackConfig$ToWebpackCompiler$,
   webpackConfig$ToChunkList$,
   chunkList$ToStaticMarkup$,
@@ -66,7 +65,7 @@ export function buildToDir (destDir, srcPatternList) {
   const {filepath$, relativePathByMatch$} = getMatchResult(srcPatternList);
 
   const xf = comp(...[
-    xfFilepath$ToWebpackConfig$,
+    map(filepath$ToWebpackConfig$),
     map(webpackConfig$ToChunkList$),
     map(chunkList$ToStaticMarkup$),
     map(createWriteStaticMarkup$ToDestDir(relativePathByMatch$, destDir)),
@@ -94,7 +93,7 @@ export function watchAndBuildToDir (destDir, srcPatternList) {
   ]);
 
   Observable.of(filepath$)
-    .transduce(xfFilepath$ToWebpackConfig$)
+    .map(filepath$ToWebpackConfig$)
     .selectMany(webpackConfig$ => {
       // Why selectMany? Because watch could be repeative.
       // Instead of wrapping one value, now a series of values are emitted.
@@ -144,7 +143,7 @@ export function devServer (relativeDevServerConfigFilepath, destDir, srcPatternL
   ]);
 
   Observable.of(filepath$)
-    .transduce(xfFilepath$ToWebpackConfig$)
+    .map(filepath$ToWebpackConfig$)
     .selectMany(webpackConfig$ => {
       // Why selectMany? Because devServer is watching and could be repeative.
       // Instead of wrapping one value, now a series of values are emitted.

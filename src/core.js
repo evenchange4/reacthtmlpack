@@ -74,24 +74,19 @@ export const reactElement$ToChunkList$ = RxSelectMany(extractWebpackConfigFilepa
 /**
  * @public
  */
-export function chunkList$ToWebpackConfig$ (chunkList$) {
-  // return R.pipe(...[
-  //   RxGroupBy(it => it.webpackConfigFilepath),
-  //   RxSelectMany(groupedObsToWebpackConfig),
-  // ], chunkList$);
-  return chunkList$
-    .groupBy(it => it.webpackConfigFilepath)
-    .selectMany(groupedObsToWebpackConfig);
-}
+export const chunkList$ToWebpackConfig$ = R.pipe(...[
+  RxGroupBy(it => it.webpackConfigFilepath),
+  RxSelectMany(groupedObsToWebpackConfig),
+]);
 
 /**
  * @package
  */
-export const xfFilepath$ToWebpackConfig$ = comp(...[
-  map(filepath$ToBabelResult$),
-  map(babelResult$ToReactElement$),
-  map(reactElement$ToChunkList$),
-  map(chunkList$ToWebpackConfig$),
+export const filepath$ToWebpackConfig$ = R.pipe(...[
+  filepath$ToBabelResult$,
+  babelResult$ToReactElement$,
+  reactElement$ToChunkList$,
+  chunkList$ToWebpackConfig$,
 ]);
 
 /**
