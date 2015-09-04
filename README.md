@@ -1,5 +1,5 @@
 # reacthtmlpack [![Travis CI][travis-image]][travis-url] [![Quality][codeclimate-image]][codeclimate-url] [![Coverage][codeclimate-coverage-image]][codeclimate-coverage-url] [![Dependencies][gemnasium-image]][gemnasium-url] [![Gitter][gitter-image]][gitter-url]
-> Using HTML templates as entry points for webpack
+> Added the missing piece of treating `index.html` as entry point in webpack bundles.
 
 [![Version][npm-image]][npm-url]
 
