@@ -2,15 +2,17 @@
 
 Library | Template Using | Cache Busting | Server Rendering | Webpack-Dev-Server with Webpack Server Config |
 -------- | -------- | -------- | -------- | -------- |
-[reacthtmlpack][reacthtmlpack] | React, Babel | `[chunkhash]` | Two Webpack Configs | Yes |
+[reacthtmlpack][reacthtmlpack] | React, Babel | `[chunkhash]` | Separate Webpack Configs | Yes |
 [react-to-html-webpack-plugin][react-to-html-webpack-plugin] | Function | `[chunkhash]` | One Cfg (`umd`) | No |
 [indexhtml-webpack-plugin][indexhtml-webpack-plugin] | HTML | `[contenthash]` | No | No |
+[html-webpack-plugin][html-webpack-plugin] | blueimp | `[contenthash]` | No | No |
 [static-site-generator-webpack-plugin][static-site-generator-webpack-plugin] | Function | `[chunkhash]` | One Cfg (`umd`) | No |
 
-[reacthtmlpack]: https://github.com/tomchentw/reacthtmlpack)
-[react-to-html-webpack-plugin]: https://github.com/markdalgleish/react-to-html-webpack-plugin)
-[indexhtml-webpack-plugin]: https://github.com/unbroken-dome/indexhtml-webpack-plugin)
-[static-site-generator-webpack-plugin]: https://github.com/markdalgleish/static-site-generator-webpack-plugin)
+[reacthtmlpack]: https://github.com/tomchentw/reacthtmlpack
+[react-to-html-webpack-plugin]: https://github.com/markdalgleish/react-to-html-webpack-plugin
+[indexhtml-webpack-plugin]: https://github.com/unbroken-dome/indexhtml-webpack-plugin
+[html-webpack-plugin]: https://github.com/ampedandwired/html-webpack-plugin
+[static-site-generator-webpack-plugin]: https://github.com/markdalgleish/static-site-generator-webpack-plugin
 
 The Last thing **Webpack-Dev-Server with Webpack Server Config** is the most important feature.
 
