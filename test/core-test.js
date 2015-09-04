@@ -22,13 +22,8 @@ import {
 import {
   filepathToBabelResult$,
   fromBabelCodeToReactElement,
-  reactElement$ToChunkList$,
+  extractWebpackConfigFilepathList$,
 } from "../src/core";
-
-import {
-  default as reactElement$Fixture,
-  multiEntrySingleConfig$ as multiEntrySingleConfig$Fixture,
-} from "./fixture/observable/reactElement$";
 
 import {
   readFileAsContent,
@@ -88,16 +83,19 @@ describe("core", () => {
 
   });
 
-  describe("reactElement$ToChunkList$", () => {
+  describe("extractWebpackConfigFilepathList$", () => {
 
     it("should be exported", () => {
-      reactElement$ToChunkList$.should.exist();
+      extractWebpackConfigFilepathList$.should.exist();
     });
 
-    it("should transform a ReactElement stream into a chunk stream", (done) => {
+    it("should transform a ReactElement object into a chunk stream", (done) => {
       const callback = sinon.spy();
       
-      reactElement$ToChunkList$(reactElement$Fixture)
+      extractWebpackConfigFilepathList$({
+        filepath: resolvePath(__dirname, "./fixture/html/single-entry-single-config-fixture.html.js"),
+        element: require("./fixture/html/single-entry-single-config-fixture.html.js"),
+      })
         .tapOnNext(callback)
         .subscribe(({filepath, element, chunkName, chunkFilepath, webpackConfigFilepath}) => {
 
@@ -135,7 +133,10 @@ describe("core", () => {
     it("should transform a ReactElement with multiple entries stream into a chunk stream", (done) => {
       const callback = sinon.spy();
       
-      const chunk$ = reactElement$ToChunkList$(multiEntrySingleConfig$Fixture)
+      const chunk$ = extractWebpackConfigFilepathList$({
+        filepath: resolvePath(__dirname, "./fixture/html/multi-entry-single-config-fixture.html.js"),
+        element: require("./fixture/html/multi-entry-single-config-fixture.html.js"),
+      });
       
       chunk$.subscribe(callback, done, () => {
           callback.calledTwice.should.be.true();
