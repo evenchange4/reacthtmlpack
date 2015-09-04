@@ -6,7 +6,7 @@ import {
 
 import {
   evaluateAsES2015Module,
-} from "../core";
+} from "../core/react";
 
 export default class ReactRenderToStringEntry extends Component {
   static propTypes = {

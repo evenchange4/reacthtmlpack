@@ -1,0 +1,11 @@
+[ignore]
+# Reference: https://github.com/facebook/react-native/blob/master/.flowconfig
+.*/docs/.*
+.*/coverage/.*
+.*/examples/.*
+
+[include]
+
+[libs]
+
+[options]
