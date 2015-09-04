@@ -20,13 +20,12 @@ import {
 } from "rx";
 
 import {
-  filepath$ToBabelResult$,
+  filepathToBabelResult$,
   babelResult$ToReactElement$,
   reactElement$ToChunkList$,
 } from "../src/core";
 
 import {
-  filepath$Fixture,
   babelResult$Fixture,
 } from "./fixture/observable";
 
@@ -44,16 +43,18 @@ chai.should();
 
 describe("core", () => {
 
-  describe("filepath$ToBabelResult$", () => {
+  describe("filepathToBabelResult$ ", () => {
 
     it("should be exported", () => {
-      filepath$ToBabelResult$.should.exist();
+      filepathToBabelResult$ .should.exist();
     });
 
-    it("should transform a filepath stream into a babel-result stream", (done) => {
+    it("should transform a filepath object into a babel-result stream", (done) => {
       const callback = sinon.spy();
-      
-      filepath$ToBabelResult$(filepath$Fixture)
+
+      filepathToBabelResult$(
+        resolvePath(__dirname, "./fixture/file/es6-fixture.js")
+      )
         .tapOnNext(callback)
         .subscribe(({filepath, code}) => {
 
