@@ -55,38 +55,85 @@ import {
 const transformFile = Observable.fromNodeCallback(babel.transformFile);
 
 /**
- * @public
+ * @testable
  */
-export const filepath$ToBabelResult$ = RxSelectMany(filepath => {
+export const filepathToBabelResult$ = filepath => {
   return R.map(({code}) => ({filepath, code}), transformFile(filepath));
-});
+};
 
 /**
- * @public
+ * @testable
  */
-export const babelResult$ToReactElement$ = R.map(fromBabelCodeToReactElement);
+export function fromBabelCodeToReactElement ({filepath, code}) {
+  const ComponentModule = evaluateAsES2015Module(code, filepath);
+  const element = ComponentModule.default;
+  const doctypeHTML = ComponentModule.doctypeHTML || "<!DOCTYPE html>";
+
+  return {
+    filepath,
+    element,
+    doctypeHTML,
+  };
+}
 
 /**
- * @public
+ * @testable
  */
-export const reactElement$ToChunkList$ = RxSelectMany(extractWebpackConfigFilepathList);
+export function extractWebpackConfigFilepathList$ ({filepath, element, doctypeHTML}) {
+  const entryWithConfigList = entryWithConfigReducer(element.props.children);
+
+  return Observable.fromArray(entryWithConfigList)
+    .map(({chunkName, chunkFilepath, configFilepath}) => {
+      return {
+        filepath,
+        element,
+        doctypeHTML,
+        chunkName,
+        chunkFilepath,
+        webpackConfigFilepath: resolvePath(toDirname(filepath), configFilepath),
+      };
+    });
+}
 
 /**
- * @public
+ * @testable
  */
-export const chunkList$ToWebpackConfig$ = R.pipe(...[
-  RxGroupBy(it => it.webpackConfigFilepath),
-  RxSelectMany(groupedObsToWebpackConfig),
-]);
+export function groupedObsToWebpackConfig$ (groupedObservable) {
+  // http://requirebin.com/?gist=fe2c7d8fe7083d8bcd2d
+  const {key: webpackConfigFilepath} = groupedObservable;
+
+  return groupedObservable.reduce(toEntryReducer, {entry: {}, chunkList: []})
+    .first()
+    .selectMany(function ({entry, chunkList}) {
+      return transformFile(webpackConfigFilepath)
+        .map(({code}) => {
+          const WebpackConfigModule = evaluateAsES2015Module(code, webpackConfigFilepath);
+          const webpackConfig = WebpackConfigModule.default;
+
+          return {
+            webpackConfigFilepath,
+            chunkList,
+            webpackConfig: {
+              ...webpackConfig,
+              entry: {
+                ...webpackConfig.reacthtmlpackExtraEntry,
+                ...entry,
+              },
+            },
+          }
+        });
+    });
+}
 
 /**
  * @package
  */
 export const filepath$ToWebpackConfig$ = R.pipe(...[
-  filepath$ToBabelResult$,
-  babelResult$ToReactElement$,
-  reactElement$ToChunkList$,
-  chunkList$ToWebpackConfig$,
+  RxSelectMany(filepathToBabelResult$),
+  R.map(fromBabelCodeToReactElement),
+  RxSelectMany(extractWebpackConfigFilepathList$),
+  RxGroupBy(R.prop("webpackConfigFilepath")),
+  RxSelectMany(groupedObsToWebpackConfig$),
 ]);
 
 /**
@@ -181,21 +228,6 @@ export function evaluateAsES2015Module (code, filepath) {
 /**
  * @private
  */
-export function fromBabelCodeToReactElement ({filepath, code}) {
-  const ComponentModule = evaluateAsES2015Module(code, filepath);
-  const element = ComponentModule.default;
-  const doctypeHTML = ComponentModule.doctypeHTML || "<!DOCTYPE html>";
-
-  return {
-    filepath,
-    element,
-    doctypeHTML,
-  };
-}
-
-/**
- * @private
- */
 export function isEntryType (type) {
   return entryPropTypeKeyList.every(key => {
     return type.propTypes && type.propTypes[key];
@@ -234,25 +266,6 @@ export function entryWithConfigReducer (children) {
 /**
  * @private
  */
-export function extractWebpackConfigFilepathList ({filepath, element, doctypeHTML}) {
-  const entryWithConfigList = entryWithConfigReducer(element.props.children);
-
-  return Observable.fromArray(entryWithConfigList)
-    .map(({chunkName, chunkFilepath, configFilepath}) => {
-      return {
-        filepath,
-        element,
-        doctypeHTML,
-        chunkName,
-        chunkFilepath,
-        webpackConfigFilepath: resolvePath(toDirname(filepath), configFilepath),
-      };
-    });
-}
-
-/**
- * @private
- */
 export function toEntryReducer(acc, item) {
   const {chunkName, chunkFilepath} = item;
   if (!acc.entry.hasOwnProperty(chunkName)) {
@@ -260,36 +273,6 @@ export function toEntryReducer(acc, item) {
     acc.chunkList.push(item);
   }
   return acc;
-}
-
-/**
- * @private
- */
-export function groupedObsToWebpackConfig (groupedObservable) {
-  // http://requirebin.com/?gist=fe2c7d8fe7083d8bcd2d
-  const {key: webpackConfigFilepath} = groupedObservable;
-
-  return groupedObservable.reduce(toEntryReducer, {entry: {}, chunkList: []})
-    .first()
-    .selectMany(function ({entry, chunkList}) {
-      return transformFile(webpackConfigFilepath)
-        .map(({code}) => {
-          const WebpackConfigModule = evaluateAsES2015Module(code, webpackConfigFilepath);
-          const webpackConfig = WebpackConfigModule.default;
-
-          return {
-            webpackConfigFilepath,
-            chunkList,
-            webpackConfig: {
-              ...webpackConfig,
-              entry: {
-                ...webpackConfig.reacthtmlpackExtraEntry,
-                ...entry,
-              },
-            },
-          }
-        });
-    });
 }
 
 /**
