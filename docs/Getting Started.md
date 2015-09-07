@@ -142,6 +142,8 @@ export default (
   <html>
     <head>
       <title>React Google Maps | tomchentw</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1"/>
+      <meta charSet="UTF-8" />
       <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing" />
     </head>
     <body>
@@ -193,7 +195,7 @@ P.S. You can write [babel](https://babeljs.io/) supported [webpack](https://webp
 *public/index.html*
 
 ```html
-<!DOCTYPE html><html><head><title>React Google Maps | tomchentw</title><script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;libraries=geometry,drawing"></script></head><body><div id="react-container"></div><script src="assets/client.js"></script></body></html>
+<!DOCTYPE html><html><head><title>React Google Maps | tomchentw</title><meta name="viewport" content="width=device-width, initial-scale=1"><meta charset="UTF-8"><script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;libraries=geometry,drawing"></script></head><body><div id="react-container"></div><script src="assets/client.js"></script></body></html>
 ```
 
 *public/assets/client.js*

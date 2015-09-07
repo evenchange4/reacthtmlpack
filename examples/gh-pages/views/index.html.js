@@ -36,6 +36,8 @@ export default (
   <html>
     <head>
       <title>React Google Maps | tomchentw</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1"/>
+      <meta charSet="UTF-8" />
       {/* http://www.freefavicon.com/freefavicons/objects/iconinfo/a-hashtag-152-211218.html */}
       <link href="favicon.ico" rel="shortcut icon" />
       {unsupportedIconsFeature()}
