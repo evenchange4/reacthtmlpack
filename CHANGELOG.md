@@ -1,3 +1,22 @@
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/tomchentw/reacthtmlpack/compare/v0.4.0...v1.0.0) (2015-10-08)
+
+
+### Features
+
+* **ReactRenderToStringEntry:** switch to react-dom/server ([5f764c0](https://github.com/tomchentw/reacthtmlpack/commit/5f764c0))
+* **core:** switch to ReactDOM ([bfcd554](https://github.com/tomchentw/reacthtmlpack/commit/bfcd554))
+* **package.json:** put react/webpack/webpack-dev-server to peerDep ([b1b7880](https://github.com/tomchentw/reacthtmlpack/commit/b1b7880))
+
+
+### BREAKING CHANGES
+
+* __React@^0.14__: upgrade React and put them to peerDep
+	* If you want to use React@0.13, please use [v0.4.0](https://github.com/tomchentw/reacthtmlpack/releases/tag/v0.4.0)
+	* Please install react/webpack/webpack-dev-server as peerDependencies when you're using npm@^3
+
+
+
 <a name="0.4.0"></a>
 # [0.4.0](https://github.com/tomchentw/reacthtmlpack/compare/v0.3.3...v0.4.0) (2015-10-08)
 
