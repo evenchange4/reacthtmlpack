@@ -62,7 +62,7 @@ The **key** part of [`entry` object property in the webpack config file](http://
 
 #### `(string/array<string>) chunkFilepath`
 
-The **value** part of [`entry` object property in the webpack config file](http://webpack.github.io/docs/configuration.html#entry). The paths here is relative to the [webpack context](http://webpack.github.io/docs/configuration.html#context).
+The **value** part of [`entry` object property in the webpack config file](http://webpack.github.io/docs/configuration.html#entry). If you pass relative path in, its base path will be this template file.
 
 #### `(string) configFilepath`
 
@@ -71,7 +71,6 @@ The **relative filepath** from this template to your webpack config file. The we
 #### Notice
 
 * Unlike webpack config, `chunkName` is always required for explicity.
-* The filepath in `chunkFilepath` should be relative to your [webpack context](http://webpack.github.io/docs/configuration.html#context). To reduce debugging time, you should set the `context` property in the webpack config file.
 
 
 ### 3 - Setting up Webpack Config File
@@ -80,7 +79,6 @@ Create [the webpack config file](https://github.com/tomchentw/reacthtmlpack/blob
 
 ```js
 module.exports = {
-  context: __dirname,
   output: {
     path: Path.resolve(__dirname, "../../public"),
     filename: "[name].js",
@@ -167,7 +165,6 @@ var Path = require("path");
 var webpack = require("webpack");
 
 module.exports = {
-  context: __dirname,
   output: {
     path: Path.resolve(__dirname, "../../public"),
     filename: "[name].js",
