@@ -1,3 +1,49 @@
+<a name="0.4.0"></a>
+# [0.4.0](https://github.com/tomchentw/reacthtmlpack/compare/v0.3.3...v0.4.0) (2015-10-08)
+
+
+### Bug Fixes
+
+* **core:** correct Rx.js style of using streams ([6bff5a1](https://github.com/tomchentw/reacthtmlpack/commit/6bff5a1)), closes [#17](https://github.com/tomchentw/reacthtmlpack/issues/17)
+* **core:** remove transducers-js ([4d3ca5f](https://github.com/tomchentw/reacthtmlpack/commit/4d3ca5f))
+
+
+### BREAKING CHANGES
+
+* __chunkFilepath__: now uses relatvie path to the current `.html.js` file
+
+  - Affected Components:
+    * WebpackScriptEntry
+    * WebpackStyleEntry
+    * WebpackNullEntry
+    * ReactRenderToStringEntry
+
+  - Before:
+    ```
+    // index.html.js
+    <ReactRenderToStringEntry
+      id="react-container"
+      tagName="div"
+      chunkName="server"
+      chunkFilepath="./scripts/ReactRoot.js" // Base path is process.cwd(), the folder you invoked `reacthtmlpack` CLI
+      configFilepath="../Server.webpackConfig.js"
+    />
+    ```
+
+  - After:
+    ```
+    // index.html.js
+    <ReactRenderToStringEntry
+      id="react-container"
+      tagName="div"
+      chunkName="server"
+      chunkFilepath="../scripts/ReactRoot.js" // Base path is NOW index.html.js
+      configFilepath="../Server.webpackConfig.js"
+    />
+    ```
+
+
+
 <a name"0.3.3"></a>
 ### 0.3.3 (2015-09-04)
 
