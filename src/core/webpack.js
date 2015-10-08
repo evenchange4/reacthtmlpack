@@ -8,6 +8,8 @@ import React, {
   Children,
 } from "react";
 
+import ReactDOM from "react-dom/server";
+
 import Rx, {
   Observable,
 } from "rx";
@@ -200,7 +202,7 @@ export function withOutputAssetsFileToMarkupFile (withOutputAssetsFile: WithOutp
     children: entryWithOutputMapper(withOutputAssetsFile.element.props.children, withOutputAssetsFile.outputAssetListByChunkName),
   });
 
-  const reactHtmlMarkup = React.renderToStaticMarkup(clonedElement);
+  const reactHtmlMarkup = ReactDOM.renderToStaticMarkup(clonedElement);
   const markup = `${ withOutputAssetsFile.doctypeHTML }${ reactHtmlMarkup }`;
 
   return {
