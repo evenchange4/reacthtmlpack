@@ -39,7 +39,6 @@ export default {
     hot: true,
     stats: { colors: true },
   },
-  context: __dirname,
   output: {
     path: resolvePath(__dirname, "../../public/assets"), // Actual pathOfTheFile will lies in
     pathinfo: "production" !== process.env.NODE_ENV,

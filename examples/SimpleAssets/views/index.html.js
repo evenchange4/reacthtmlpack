@@ -15,7 +15,7 @@ export default (
       <meta charSet="UTF-8" />
       <WebpackStyleEntry
         chunkName="assets/client"
-        chunkFilepath="./scripts/client.js"
+        chunkFilepath="../scripts/client.js"
         configFilepath="../SimpleAssets.webpackConfig.js"
       />
       <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing" />
@@ -24,7 +24,7 @@ export default (
       <div id="react-container" />
       <WebpackScriptEntry
         chunkName="assets/client"
-        chunkFilepath="./scripts/client.js"
+        chunkFilepath="../scripts/client.js"
         configFilepath="../SimpleAssets.webpackConfig.js"
       />
     </body>

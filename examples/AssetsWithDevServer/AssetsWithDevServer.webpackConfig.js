@@ -33,7 +33,6 @@ module.exports = {
     hot: true,
     stats: { colors: true },
   },
-  context: __dirname,
   output: {
     path: Path.resolve(__dirname, "../../public/assets"),
     publicPath: "assets/",

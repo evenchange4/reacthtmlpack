@@ -29,7 +29,6 @@ const externals = [
 }, []);
 
 export default {
-  context: __dirname,
   output: {
     path: resolvePath(__dirname, "../../public/assets"),
     pathinfo: "production" !== process.env.NODE_ENV,

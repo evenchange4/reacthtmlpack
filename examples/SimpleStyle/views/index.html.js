@@ -15,12 +15,12 @@ export default (
       <meta charSet="UTF-8" />
       <WebpackStyleEntry
         chunkName="assets/vendorStyle"
-        chunkFilepath="normalize.css"
+        chunkFilepath={require.resolve("normalize.css")}
         configFilepath="../SimpleStyle.webpackConfig.js"
       />
       <WebpackStyleEntry
         chunkName="assets/style"
-        chunkFilepath="./index.css"
+        chunkFilepath="../index.css"
         configFilepath="../SimpleStyle.webpackConfig.js"
       />
       <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing" />
@@ -29,7 +29,7 @@ export default (
       <div id="react-container" />
       <WebpackScriptEntry
         chunkName="assets/script"
-        chunkFilepath="./scripts/client.js"
+        chunkFilepath="../scripts/client.js"
         configFilepath="../SimpleStyle.webpackConfig.js"
       />
     </body>
