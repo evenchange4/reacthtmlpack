@@ -5,6 +5,10 @@ import {
 } from "react";
 
 import {
+  default as ReactDOMServer,
+} from "react-dom/server";
+
+import {
   evaluateAsES2015Module,
 } from "../core/react";
 
@@ -41,7 +45,7 @@ export default class ReactRenderToStringEntry extends Component {
       const ComponentModule = evaluateAsES2015Module(rawAsset.source());
 
       const markup = {
-        __html: React.renderToString(<ComponentModule.default />),
+        __html: ReactDOMServer.renderToString(<ComponentModule.default />),
       };
 
       return React.createElement(tagName, {

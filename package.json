@@ -59,6 +59,7 @@
     "istanbul": "^0.3.18",
     "mocha": "^2.2.5",
     "react": "^0.14.0",
+    "react-dom": "^0.14.0",
     "rimraf": "^2.4.3",
     "tomchentw-npm-dev": "^3.0.0",
     "webpack": "^1.12.2",
@@ -75,6 +76,7 @@
   },
   "peerDependencies": {
     "react": "^0.14.0",
+    "react-dom": "^0.14.0",
     "webpack": "^1.12.2",
     "webpack-dev-server": "^1.12.0"
   }
