@@ -108,7 +108,7 @@ export function buildToDir (destDir, srcPatternList) {
 
   writeToFileResultStream.subscribe(
     it => console.log(`Next: ${ it }`),
-    error => console.error(error),
+    error => {throw error},
     () => console.log(`Done!`)
   );
 }
@@ -160,7 +160,7 @@ export function watchAndBuildToDir (destDir, srcPatternList) {
 
   writeToFileResultStream.subscribe(
     it => console.log(`Next: ${ it }`),
-    error => console.error(error),
+    error => {throw error},
     () => console.log(`Done!`)
   );
 }
@@ -202,7 +202,7 @@ export function devServer (relativeDevServerConfigFilepath, destDir, srcPatternL
 
   writeToFileResultStream.subscribe(
     it => console.log(`Next: ${ it }`),
-    error => console.error(error),
+    error => {throw error},
     () => console.log(`Done!`)
   );
 }
