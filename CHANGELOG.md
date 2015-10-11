@@ -1,3 +1,19 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/tomchentw/reacthtmlpack/compare/v1.0.0...v1.1.0) (2015-10-11)
+
+
+### Bug Fixes
+
+* **cli:** cold -> hot Observable for publishedWebpackConfigArrayStream ([20ce5f3](https://github.com/tomchentw/reacthtmlpack/commit/20ce5f3)), closes [#17](https://github.com/tomchentw/reacthtmlpack/issues/17)
+* **cli:** throw error when it comes ([080fefe](https://github.com/tomchentw/reacthtmlpack/commit/080fefe))
+* **webpack:** using id to identify an unique entry ([f74a746](https://github.com/tomchentw/reacthtmlpack/commit/f74a746))
+
+### Features
+
+* **entry:** add invariant in render functions ([519c23d](https://github.com/tomchentw/reacthtmlpack/commit/519c23d))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/tomchentw/reacthtmlpack/compare/v0.4.0...v1.0.0) (2015-10-08)
 
