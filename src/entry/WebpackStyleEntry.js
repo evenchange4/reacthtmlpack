@@ -4,6 +4,10 @@ import {
   PropTypes,
 } from "react";
 
+import {
+  default as invariant,
+} from "fbjs/lib/invariant";
+
 export default class WebpackStyleEntry extends Component {
   static propTypes = {
     chunkName: PropTypes.string.isRequired,
@@ -28,17 +32,24 @@ export default class WebpackStyleEntry extends Component {
     } = this.props;
 
     if (outputAssetList) {
-      const [outputPublicFilepath] = outputAssetList
-        .map(({publicFilepath}) => publicFilepath)
-        .filter(::/\.css$/.test);
+      invariant(0 < outputAssetList.length, "[WebpackStyleEntry] outputAssetList is an empty array");
 
-      return (
-        <link {...restProps} rel="stylesheet" href={outputPublicFilepath} />
-      );
-    } else {
-      return (
-        <noscript />
-      );
+      const cssAssetList = outputAssetList
+        .filter(({publicFilepath}) => {
+          invariant("string" === typeof publicFilepath, "[WebpackStyleEntry] publicFilepath (%s) is not a string", publicFilepath);
+
+          return /\.css$/.test(publicFilepath);
+        });
+
+      if (0 < cssAssetList.length) {
+        const firstAsset = cssAssetList[0];
+        return (
+          <link {...restProps} rel="stylesheet" href={firstAsset.publicFilepath} />
+        );
+      }
     }
+    return (
+      <noscript />
+    );
   }
 }
