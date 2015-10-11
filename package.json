@@ -16,11 +16,11 @@
   "scripts": {
     "clean": "rimraf lib",
     "prebuild": "npm run lint && npm run clean",
-    "build": "babel src --out-dir lib",
     "build:watch": "npm run build -- --watch",
+    "build": "babel src --out-dir lib",
     "lint": "eslint bin src",
-    "pretest": "npm run lint",
     "pretest:cov": "npm run lint",
+    "pretest": "npm run lint",
     "test:cov": "babel-node ./node_modules/.bin/isparta cover --report lcov _mocha -- $npm_package_config_mocha",
     "test:watch": "npm test -- --watch",
     "test": "mocha $npm_package_config_mocha"
