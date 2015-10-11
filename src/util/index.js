@@ -110,7 +110,7 @@ export function entryListFileAndFilepathWebpackStatsMapCombiner (entryListFile, 
   return {
     ...entryListFile,
     entryList: null,
-    outputAssetListByChunkName: entryListFile.entryList.reduce((acc, {configFilepath, chunkName}) => {
+    outputAssetListById: entryListFile.entryList.reduce((acc, {id, configFilepath, chunkName}) => {
       const webpackStats = webpackStatsByFilepath[configFilepath];
       const outputAssetList = [].concat(webpackStats.statsJson.assetsByChunkName[chunkName])
         .map(assetName => {
@@ -121,7 +121,7 @@ export function entryListFileAndFilepathWebpackStatsMapCombiner (entryListFile, 
         });
       return {
         ...acc,
-        [chunkName]: outputAssetList,
+        [id]: outputAssetList,
       };
     }, {}),
   };

@@ -38,7 +38,7 @@ export function isEntryType (type: any) : bool {
   });
 }
 
-export type EntryType = {chunkName: string, chunkFilepath: string, configFilepath: string};
+export type EntryType = {id: string, chunkName: string, chunkFilepath: string, configFilepath: string};
 export type EntryListType = Array<EntryType>;
 
 /**
@@ -53,6 +53,7 @@ export function entryWithConfigReducer (children: any, resolvePathByFile: (filep
     }
     if (isEntryType(child.type)) {
       acc.push({
+        id: `${ child.props.configFilepath }__${ child.props.chunkName }`,
         chunkName: child.props.chunkName,
         chunkFilepath: [].concat(child.props.chunkFilepath).map(resolvePathByFile),
         configFilepath: resolvePathByFile(child.props.configFilepath),
@@ -171,26 +172,22 @@ export function webpackMultiStatsToWebpackSingleStatsArray (webpackMultiStats: o
     .map(stats => ({stats, statsJson: stats.toJson()}));
 }
 
-export type WithOutputAssetsFile = {filepath: string, relativePath: string, code: string, element: any, doctypeHTML: string, outputAssetListByChunkName: object};
+export type WithOutputAssetsFile = {filepath: string, relativePath: string, code: string, element: any, doctypeHTML: string, outputAssetListById: object};
 
 export type MarkupFile = {relativePath: string, markup: string};
 
-export function entryWithOutputMapper (children, outputAssetListByChunkName) {
+export function entryWithOutputMapper (children, outputAssetListById) {
   return Children.map(children, child => {
     if (!React.isValidElement(child)) {
       return child;
     }
-    const {
-      chunkName,
-      children,
-    } = child.props;
-
     const extraProps = {
-      children: entryWithOutputMapper(children, outputAssetListByChunkName),
+      children: entryWithOutputMapper(child.props.children, outputAssetListById),
     };
 
     if (isEntryType(child.type)) {
-      extraProps.outputAssetList = outputAssetListByChunkName[chunkName];
+      const id = `${ child.props.configFilepath }__${ child.props.chunkName }`;
+      extraProps.outputAssetList = outputAssetListById[id];
     }
 
     return React.cloneElement(child, extraProps);
@@ -199,7 +196,7 @@ export function entryWithOutputMapper (children, outputAssetListByChunkName) {
 
 export function withOutputAssetsFileToMarkupFile (withOutputAssetsFile: WithOutputAssetsFile): MarkupFile {
   const clonedElement = React.cloneElement(withOutputAssetsFile.element, {
-    children: entryWithOutputMapper(withOutputAssetsFile.element.props.children, withOutputAssetsFile.outputAssetListByChunkName),
+    children: entryWithOutputMapper(withOutputAssetsFile.element.props.children, withOutputAssetsFile.outputAssetListById),
   });
 
   const reactHtmlMarkup = ReactDOM.renderToStaticMarkup(clonedElement);
