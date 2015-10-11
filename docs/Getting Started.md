@@ -106,7 +106,7 @@ module.exports = {
 ```sh
 cd examples/SimpleScript
 npm install
-npm run dev # reacthtmlpack buildToDir ../../public ./views/*.html.js
+npm run dev # reacthtmlpack buildToDir ../../public './views/*.html.js'
 ```
 
 Look at the [public](https://github.com/tomchentw/reacthtmlpack/tree/master/public) folder and you'll see the following:
