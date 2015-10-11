@@ -64,6 +64,8 @@ export function createWebpackConfigArray (entryListFile, devServerConfigFilepath
     .selectMany(groupedEntryListToWebpackConfig)
     .map(addDevServerToWebpackConfigCreator(devServerConfigFilepath))
     .reduce(webpackConfigReducer, [])
+    // Un-comment to demonstrate hot v.s. cold Observable
+    // .tap(::console.log)
 }
 
 /**
@@ -81,11 +83,11 @@ export function buildToDir (destDir, srcPatternList) {
 
   const entryListFileStream = createEntryListFile(srcPatternList);
 
-  const webpackConfigArrayStream = createWebpackConfigArray(entryListFileStream);
+  const publishedWebpackConfigArrayStream = createWebpackConfigArray(entryListFileStream).publish();
 
-  const webpackConfigFilepathByIndexStream = createWebpackConfigFilepathByIndex(webpackConfigArrayStream);
+  const webpackConfigFilepathByIndexStream = createWebpackConfigFilepathByIndex(publishedWebpackConfigArrayStream);
 
-  const webpackSingleStatsArrayStream = webpackConfigArrayStream
+  const webpackSingleStatsArrayStream = publishedWebpackConfigArrayStream
     .map(webpackConfigArray => webpackConfigArray.map(({webpackConfig}) => webpackConfig))
     .tap(webpackConfigArrayInspector)
     .map(webpackConfigArrayToWebpackCompiler)
@@ -106,6 +108,7 @@ export function buildToDir (destDir, srcPatternList) {
     .map(withOutputAssetsFileToMarkupFile)
     .selectMany(markupFileToWriteFileCreator(destDir));
 
+  publishedWebpackConfigArrayStream.connect();
   writeToFileResultStream.subscribe(
     it => console.log(`Next: ${ it }`),
     error => {throw error},
@@ -120,11 +123,11 @@ export function watchAndBuildToDir (destDir, srcPatternList) {
 
   const entryListFileStream = createEntryListFile(srcPatternList);
 
-  const webpackConfigArrayStream = createWebpackConfigArray(entryListFileStream);
+  const publishedWebpackConfigArrayStream = createWebpackConfigArray(entryListFileStream).publish();
 
-  const webpackConfigFilepathByIndexStream = createWebpackConfigFilepathByIndex(webpackConfigArrayStream);
+  const webpackConfigFilepathByIndexStream = createWebpackConfigFilepathByIndex(publishedWebpackConfigArrayStream);
 
-  const webpackSingleStatsArrayStream = webpackConfigArrayStream
+  const webpackSingleStatsArrayStream = publishedWebpackConfigArrayStream
     .map(webpackConfigArray => webpackConfigArray.map(({webpackConfig}) => webpackConfig))
     .tap(webpackConfigArrayInspector)
     .selectMany(function webpackConfigArrayRunWithWatchToSingleStatsArray (webpackConfigArray) {
@@ -158,6 +161,7 @@ export function watchAndBuildToDir (destDir, srcPatternList) {
     .map(withOutputAssetsFileToMarkupFile)
     .selectMany(markupFileToWriteFileCreator(destDir));
 
+  publishedWebpackConfigArrayStream.connect();
   writeToFileResultStream.subscribe(
     it => console.log(`Next: ${ it }`),
     error => {throw error},
@@ -174,11 +178,11 @@ export function devServer (relativeDevServerConfigFilepath, destDir, srcPatternL
 
   const entryListFileStream = createEntryListFile(srcPatternList);
 
-  const webpackConfigArrayStream = createWebpackConfigArray(entryListFileStream, devServerConfigFilepath);
+  const publishedWebpackConfigArrayStream = createWebpackConfigArray(entryListFileStream, devServerConfigFilepath).publish();
 
-  const webpackConfigFilepathByIndexStream = createWebpackConfigFilepathByIndex(webpackConfigArrayStream);
+  const webpackConfigFilepathByIndexStream = createWebpackConfigFilepathByIndex(publishedWebpackConfigArrayStream);
 
-  const webpackSingleStatsArrayStream = webpackConfigArrayStream
+  const webpackSingleStatsArrayStream = publishedWebpackConfigArrayStream
     .map(webpackConfigArray => webpackConfigArray.map(({webpackConfig}) => webpackConfig))
     .tap(webpackConfigArrayInspector)
     .map(webpackConfigArrayToWebpackCompiler)
@@ -200,6 +204,7 @@ export function devServer (relativeDevServerConfigFilepath, destDir, srcPatternL
     .map(withOutputAssetsFileToMarkupFile)
     .selectMany(markupFileToWriteFileCreator(destDir));
 
+  publishedWebpackConfigArrayStream.connect();
   writeToFileResultStream.subscribe(
     it => console.log(`Next: ${ it }`),
     error => {throw error},
