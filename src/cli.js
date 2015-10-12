@@ -36,7 +36,7 @@ import {
   markupFileToWriteFileCreator,
   entryListFileToEntry,
   webpackConfigArrayToIndexFilepathMap,
-  indexFilepathMapAndSingleStatsArrayCombiner,
+  singleStatsArrayAndIndexFilepathMapCombiner,
   entryListFileAndFilepathWebpackStatsMapCombiner,
   // DevServer
   addDevServerToWebpackConfigCreator,
@@ -81,39 +81,39 @@ export function createWebpackConfigFilepathByIndex (webpackConfigArray) {
  */
 export function buildToDir (destDir, srcPatternList) {
 
-  const entryListFileStream = createEntryListFile(srcPatternList);
+  const sharedReplayEntryListFileStream = createEntryListFile(srcPatternList)
+    .shareReplay()
 
-  const publishedWebpackConfigArrayStream = createWebpackConfigArray(entryListFileStream).publish();
+  const publishedWebpackConfigArrayStream = createWebpackConfigArray(sharedReplayEntryListFileStream)
+    .publish()
 
   const webpackConfigFilepathByIndexStream = createWebpackConfigFilepathByIndex(publishedWebpackConfigArrayStream);
 
-  const webpackSingleStatsArrayStream = publishedWebpackConfigArrayStream
+  const writeToFileResultStream = publishedWebpackConfigArrayStream
     .map(webpackConfigArray => webpackConfigArray.map(({webpackConfig}) => webpackConfig))
     .tap(webpackConfigArrayInspector)
     .map(webpackConfigArrayToWebpackCompiler)
     .selectMany(webpackMultiCompilerToMultiStats)
     .map(webpackMultiStatsToWebpackSingleStatsArray)
-
-  const webpackStatsByFilepathStream = Observable.combineLatest(
-    webpackConfigFilepathByIndexStream,
-    webpackSingleStatsArrayStream,
-    indexFilepathMapAndSingleStatsArrayCombiner
-  )
-
-  const writeToFileResultStream = Observable.combineLatest(
-    entryListFileStream,
-    webpackStatsByFilepathStream,
-    entryListFileAndFilepathWebpackStatsMapCombiner
-  )
+    .withLatestFrom(
+      webpackConfigFilepathByIndexStream,
+      singleStatsArrayAndIndexFilepathMapCombiner
+    )
+    .selectMany(w =>
+      sharedReplayEntryListFileStream.map(e =>
+        entryListFileAndFilepathWebpackStatsMapCombiner(e, w)
+      )
+    )
     .map(withOutputAssetsFileToMarkupFile)
     .selectMany(markupFileToWriteFileCreator(destDir));
 
-  publishedWebpackConfigArrayStream.connect();
   writeToFileResultStream.subscribe(
     it => console.log(`Next: ${ it }`),
     error => {throw error},
     () => console.log(`Done!`)
   );
+
+  publishedWebpackConfigArrayStream.connect();
 }
 
 /**
@@ -121,13 +121,15 @@ export function buildToDir (destDir, srcPatternList) {
  */
 export function watchAndBuildToDir (destDir, srcPatternList) {
 
-  const entryListFileStream = createEntryListFile(srcPatternList);
+  const sharedReplayEntryListFileStream = createEntryListFile(srcPatternList)
+    .shareReplay()
 
-  const publishedWebpackConfigArrayStream = createWebpackConfigArray(entryListFileStream).publish();
+  const publishedWebpackConfigArrayStream = createWebpackConfigArray(sharedReplayEntryListFileStream)
+    .publish()
 
   const webpackConfigFilepathByIndexStream = createWebpackConfigFilepathByIndex(publishedWebpackConfigArrayStream);
 
-  const webpackSingleStatsArrayStream = publishedWebpackConfigArrayStream
+  const writeToFileResultStream = publishedWebpackConfigArrayStream
     .map(webpackConfigArray => webpackConfigArray.map(({webpackConfig}) => webpackConfig))
     .tap(webpackConfigArrayInspector)
     .selectMany(function webpackConfigArrayRunWithWatchToSingleStatsArray (webpackConfigArray) {
@@ -145,28 +147,26 @@ export function watchAndBuildToDir (destDir, srcPatternList) {
           return acc;
         }, new Array(webpackConfigArray.length))
         .takeWhile(webpackSingleStatsArray => webpackSingleStatsArray.every(_.identity));
-    });
-
-  const webpackStatsByFilepathStream = Observable.combineLatest(
-    webpackConfigFilepathByIndexStream,
-    webpackSingleStatsArrayStream,
-    indexFilepathMapAndSingleStatsArrayCombiner
-  )
-
-  const writeToFileResultStream = Observable.combineLatest(
-    entryListFileStream,
-    webpackStatsByFilepathStream,
-    entryListFileAndFilepathWebpackStatsMapCombiner
-  )
+    })
+    .withLatestFrom(
+      webpackConfigFilepathByIndexStream,
+      singleStatsArrayAndIndexFilepathMapCombiner
+    )
+    .selectMany(w =>
+      sharedReplayEntryListFileStream.map(e =>
+        entryListFileAndFilepathWebpackStatsMapCombiner(e, w)
+      )
+    )
     .map(withOutputAssetsFileToMarkupFile)
     .selectMany(markupFileToWriteFileCreator(destDir));
 
-  publishedWebpackConfigArrayStream.connect();
   writeToFileResultStream.subscribe(
     it => console.log(`Next: ${ it }`),
     error => {throw error},
     () => console.log(`Done!`)
   );
+
+  publishedWebpackConfigArrayStream.connect();
 }
 
 /**
@@ -176,38 +176,38 @@ export function devServer (relativeDevServerConfigFilepath, destDir, srcPatternL
 
   const devServerConfigFilepath = resolvePath(process.cwd(), relativeDevServerConfigFilepath);
 
-  const entryListFileStream = createEntryListFile(srcPatternList);
+  const sharedReplayEntryListFileStream = createEntryListFile(srcPatternList)
+    .shareReplay()
 
-  const publishedWebpackConfigArrayStream = createWebpackConfigArray(entryListFileStream, devServerConfigFilepath).publish();
+  const publishedWebpackConfigArrayStream = createWebpackConfigArray(sharedReplayEntryListFileStream, devServerConfigFilepath)
+    .publish()
 
   const webpackConfigFilepathByIndexStream = createWebpackConfigFilepathByIndex(publishedWebpackConfigArrayStream);
 
-  const webpackSingleStatsArrayStream = publishedWebpackConfigArrayStream
+  const writeToFileResultStream = publishedWebpackConfigArrayStream
     .map(webpackConfigArray => webpackConfigArray.map(({webpackConfig}) => webpackConfig))
     .tap(webpackConfigArrayInspector)
     .map(webpackConfigArrayToWebpackCompiler)
     // Why selectMany? Because devServer just like watch could be repeative.
     // Instead of wrapping one value, now a series of values are emitted.
     .selectMany(webpackMultiCompilerRunWithDevServerToSingleStatsArray)
-
-  const webpackStatsByFilepathStream = Observable.combineLatest(
-    webpackConfigFilepathByIndexStream,
-    webpackSingleStatsArrayStream,
-    indexFilepathMapAndSingleStatsArrayCombiner
-  )
-
-  const writeToFileResultStream = Observable.combineLatest(
-    entryListFileStream,
-    webpackStatsByFilepathStream,
-    entryListFileAndFilepathWebpackStatsMapCombiner
-  )
+    .withLatestFrom(
+      webpackConfigFilepathByIndexStream,
+      singleStatsArrayAndIndexFilepathMapCombiner
+    )
+    .selectMany(w =>
+      sharedReplayEntryListFileStream.map(e =>
+        entryListFileAndFilepathWebpackStatsMapCombiner(e, w)
+      )
+    )
     .map(withOutputAssetsFileToMarkupFile)
     .selectMany(markupFileToWriteFileCreator(destDir));
 
-  publishedWebpackConfigArrayStream.connect();
   writeToFileResultStream.subscribe(
     it => console.log(`Next: ${ it }`),
     error => {throw error},
     () => console.log(`Done!`)
   );
+
+  publishedWebpackConfigArrayStream.connect();
 }

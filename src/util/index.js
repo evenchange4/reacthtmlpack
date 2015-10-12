@@ -91,7 +91,7 @@ export function webpackConfigArrayToIndexFilepathMap (webpackConfigArray) {
 /**
  * @package
  */
-export function indexFilepathMapAndSingleStatsArrayCombiner (filepathByIndex, singleStatsArray) {
+export function singleStatsArrayAndIndexFilepathMapCombiner (singleStatsArray, filepathByIndex) {
   return singleStatsArray
     .reduce((acc, singleStats, index) => {
       const filepath = filepathByIndex[index];
