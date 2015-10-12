@@ -1,3 +1,13 @@
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/tomchentw/reacthtmlpack/compare/v1.1.0...v1.2.0) (2015-10-12)
+
+
+### Bug Fixes
+
+* **cli:** entryListFileStream should be share-replayed stream ([b368a53](https://github.com/tomchentw/reacthtmlpack/commit/b368a53))
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/tomchentw/reacthtmlpack/compare/v1.0.0...v1.1.0) (2015-10-11)
 
